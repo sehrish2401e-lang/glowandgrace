@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow & Grace | Skincare & Makeup</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+        background: #faf6f0;
+        color: #3a2b2b;
+    }
+
+    /* Navbar */
+    .navbar {
+        background: linear-gradient(90deg, #1c1c1c, #2b2b2b);
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-form input[type="text"] {
+        padding: 9px 16px;
+        border: none;
+        border-radius: 20px 0 0 20px;
+        outline: none;
+        font-size: 14px;
+        width: 200px;
+    }
+
+    .search-form button {
+        padding: 9px 18px;
+        border: none;
+        border-radius: 0 20px 20px 0;
+        background: #e8d9b8;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .search-form button:hover {
+        background: #4a1e33;
+    }
+
+    .cart-badge {
+        background: #b8894f;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 11px;
+        padding: 1px 6px;
+        margin-left: 4px;
+    }
+
+    .navbar h1 {
+        font-size: 26px;
+        color: #e8d9b8;
+        letter-spacing: 1px;
+    }
+
+    .navbar nav a {
+        color: #e8d9b8;
+        text-decoration: none;
+        margin-left: 25px;
+        font-weight: 600;
+        font-size: 15px;
+        transition: color 0.2s;
+    }
+
+    .navbar nav a:hover {
+        color: #ffffff;
+    }
+
+    /* User greeting + auth buttons */
+    .user-greeting {
+        color: #b8894f;
+        margin-left: 25px;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .navbar nav a.auth-btn {
+        border: 1px solid #e8d9b8;
+        border-radius: 20px;
+        padding: 6px 16px;
+    }
+
+    .navbar nav a.auth-btn:hover {
+        background: #e8d9b8;
+        color: #1c1c1c;
+    }
+
+    /* Messages */
+    .messages {
+        max-width: 1100px;
+        margin: 20px auto 0;
+        padding: 0 30px;
+    }
+
+    .message {
+        background: #e8f5e9;
+        color: #2e6b34;
+        border-left: 4px solid #2e6b34;
+        padding: 12px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .message.error {
+        background: #fdecea;
+        color: #a12622;
+        border-left-color: #a12622;
+    }
+
+    /* Hero section */
+    .hero {
+        text-align: center;
+        padding: 70px 20px 50px;
+        background: linear-gradient(180deg, #f5efe2, #faf6f0);
+    }
+
+    .hero h2 {
+        font-size: 40px;
+        color: #2b2420;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        font-size: 17px;
+        color: #7a6f63;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+
+    /* Section titles */
+    .section-title {
+        text-align: center;
+        margin: 50px 0 25px;
+    }
+
+    .section-title h3 {
+        font-size: 28px;
+        color: #2b2420;
+        display: inline-block;
+        border-bottom: 3px solid #b8894f;
+        padding-bottom: 8px;
+    }
+
+    /* Product grid */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        max-width: 1100px;
+        margin: 0 auto 60px;
+        padding: 0 30px;
+    }
+
+    .product-card {
+        display: block;
+        background: #ffffff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+    }
+
+    .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .add-cart-btn {
+        width: 100%;
+        border: none;
+        background: #b8894f;
+        color: #fff;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .add-cart-btn:hover {
+        background: #8f6a3d;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        background: #ffffff;
+        padding: 10px;
+    }
+
+    .product-info {
+        padding: 16px;
+    }
+
+    .product-info h4 {
+        font-size: 17px;
+        color: #2b2420;
+        margin-bottom: 6px;
+    }
+
+    .product-info p {
+        font-size: 13px;
+        color: #7a6f63;
+        margin-bottom: 10px;
+        min-height: 36px;
+    }
+
+    .price {
+        font-size: 16px;
+        font-weight: bold;
+        color: #b8894f;
+    }
+
+    .empty-msg {
+        text-align: center;
+        color: #9a8f83;
+        font-size: 14px;
+        padding: 20px;
+        grid-column: 1 / -1;
+    }
+
+    /* Footer */
+    footer {
+        background: #1c1c1c;
+        color: #f0e6d2;
+        text-align: center;
+        padding: 25px;
+        font-size: 14px;
+        margin-top: 40px;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .fade-in-up {
+        animation: fadeInUp 0.7s ease both;
+    }
+    .fade-in {
+        animation: fadeIn 0.8s ease both;
+    }
+
+    .product-grid .product-card:nth-child(1) { animation-delay: 0.05s; }
+    .product-grid .product-card:nth-child(2) { animation-delay: 0.15s; }
+    .product-grid .product-card:nth-child(3) { animation-delay: 0.25s; }
+    .product-grid .product-card:nth-child(4) { animation-delay: 0.35s; }
+    .product-grid .product-card:nth-child(5) { animation-delay: 0.45s; }
+    .product-grid .product-card:nth-child(6) { animation-delay: 0.55s; }
+    .product-grid .product-card:nth-child(n+7) { animation-delay: 0.6s; }
+
+    .product-card img {
+        transition: transform 0.4s ease;
+    }
+    .product-card:hover img {
+        transform: scale(1.07);
+    }
+    .product-card:hover {
+        box-shadow: 0 14px 32px rgba(0,0,0,0.16) !important;
+    }
+
+    .navbar nav a {
+        position: relative;
+    }
+    .navbar nav a::after {
+        content: '';
+        position: absolute;
+        left: 0; bottom: -4px;
+        width: 0%;
+        height: 2px;
+        background: currentColor;
+        transition: width 0.25s ease;
+    }
+    .navbar nav a:hover::after {
+        width: 100%;
+    }
+
+    button, .add-cart-btn, .checkout-btn, .back-btn, .submit-btn,
+    .place-order-btn, .home-btn, .search-form button {
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+    }
+    button:hover, .add-cart-btn:hover, .checkout-btn:hover, .back-btn:hover,
+    .submit-btn:hover, .place-order-btn:hover, .home-btn:hover, .search-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .cart-item, .value-card, .success-msg {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cart-item:hover, .value-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Hero tagline slider */
+    .tagline-slider {
+        position: relative;
+        max-width: 550px;
+        margin: 0 auto;
+        height: 26px;
+    }
+    .tagline-slider .slide {
+        position: absolute;
+        top: 0; left: 0; width: 100%;
+        font-size: 17px;
+        color: #7a6f63;
+        opacity: 0;
+        animation: taglineFade 9s infinite;
+    }
+    .tagline-slider .slide1 { animation-delay: 0s; }
+    .tagline-slider .slide2 { animation-delay: 3s; }
+    .tagline-slider .slide3 { animation-delay: 6s; }
+
+    @keyframes taglineFade {
+        0%   { opacity: 0; transform: translateY(10px); }
+        5%   { opacity: 1; transform: translateY(0); }
+        28%  { opacity: 1; transform: translateY(0); }
+        33%  { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>🌸 Glow & Grace</h1>
+        <form class="search-form" method="GET" action="{% url 'search_results' %}">
+            <input type="text" name="q" placeholder="Search products...">
+            <button type="submit">🔍</button>
+        </form>
+        <nav>
+            <a href="{% url 'category_page' 'skincare' %}">Skincare</a>
+            <a href="{% url 'category_page' 'makeup' %}">Makeup</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart_detail' %}">Cart 🛒<span class="cart-badge">{{ cart_count }}</span></a>
+
+            {% if user.is_authenticated %}
+                <span class="user-greeting">Salam, {{ user.username }}</span>
+                <a href="{% url 'my_orders' %}">My Orders</a>
+                {% if user.is_staff %}
+                    <a href="/admin/">Admin</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" class="auth-btn">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}" class="auth-btn">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="hero fade-in-up">
+        <h2>Beauty That Feels Like You</h2>
+        <div class="tagline-slider">
+            <p class="slide slide1">Explore our handpicked collection of skincare essentials.</p>
+            <p class="slide slide2">Makeup must-haves — made to make you glow.</p>
+            <p class="slide slide3">Quality you can trust. Beauty you deserve.</p>
+        </div>
+    </div>
+
+    <div id="skincare" class="fade-in-up">
+        <div class="section-title"><h3>✨ Skincare</h3></div>
+        <div class="product-grid">
+            {% for product in skincare %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' product.id %}" class="card-link">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/220x200?text=No+Image" alt="No image">
+                    {% endif %}
+                    <div class="product-info">
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.description|truncatewords:12 }}</p>
+                        <span class="price">Rs. {{ product.price }}</span>
+                    </div>
+                </a>
+                <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="add-cart-btn">Add to Cart 🛒</button>
+                </form>
+            </div>
+            {% empty %}
+            <p class="empty-msg">Abhi tak koi skincare product add nahi hua. Admin panel se add karein.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="makeup" class="fade-in-up">
+        <div class="section-title"><h3>💄 Makeup</h3></div>
+        <div class="product-grid">
+            {% for product in makeup %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' product.id %}" class="card-link">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/220x200?text=No+Image" alt="No image">
+                    {% endif %}
+                    <div class="product-info">
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.description|truncatewords:12 }}</p>
+                        <span class="price">Rs. {{ product.price }}</span>
+                    </div>
+                </a>
+                <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="add-cart-btn">Add to Cart 🛒</button>
+                </form>
+            </div>
+            {% empty %}
+            <p class="empty-msg">Abhi tak koi makeup product add nahi hua. Admin panel se add karein.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Glow & Grace. All rights reserved.
+    </footer>
+
+</body>
+</html>

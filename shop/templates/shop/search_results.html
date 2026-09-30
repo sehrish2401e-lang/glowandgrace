@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Search Results | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2 class="page-title reveal">Search Results</h2>
+    {% if query %}
+    <p class="page-sub reveal" style="--i:1">"{{ query }}" ke liye {{ products|length }} result(s) mile</p>
+    {% endif %}
+</div>
+
+<div class="product-grid">
+    {% for product in products %}
+        {% include 'shop/_product_card.html' %}
+    {% empty %}
+        <p class="empty-msg">
+            {% if query %}
+                Koi product "{{ query }}" ke naam se nahi mila. Kuch aur try karein.
+            {% else %}
+                Kuch search karne ke liye upar box me likhein.
+            {% endif %}
+        </p>
+    {% endfor %}
+</div>
+{% endblock %}

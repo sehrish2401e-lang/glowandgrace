@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ category_name }} | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2 class="page-title reveal">{{ category_name }}</h2>
+    <div class="cat-tabs reveal" style="--i:1">
+        <a href="{% url 'category_page' 'skincare' %}" class="{% if category == 'skincare' %}active{% endif %}">Skincare</a>
+        <a href="{% url 'category_page' 'makeup' %}" class="{% if category == 'makeup' %}active{% endif %}">Makeup</a>
+        <a href="{% url 'category_page' 'haircare' %}" class="{% if category == 'haircare' %}active{% endif %}">Haircare</a>
+        <a href="{% url 'category_page' 'fragrance' %}" class="{% if category == 'fragrance' %}active{% endif %}">Fragrance</a>
+    </div>
+</div>
+
+<div class="product-grid">
+    {% for product in products %}
+        {% include 'shop/_product_card.html' %}
+    {% empty %}
+        <p class="empty-msg">Abhi tak is category me koi product add nahi hua.</p>
+    {% endfor %}
+</div>
+{% endblock %}

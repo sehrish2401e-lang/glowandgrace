@@ -1,0 +1,31 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Contact Us | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="form-card reveal">
+    <h2>Get in Touch</h2>
+    <p class="sub">Koi sawal ya suggestion hai? Neeche form bhar dein, hum jald reply karenge.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Aapka naam" required>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Aapka email" required>
+        </div>
+        <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" placeholder="Apna message likhein..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-block">Send Message</button>
+    </form>
+
+    <div class="contact-info">
+        📧 support@glowandgrace.com &nbsp; | &nbsp; 📞 +92 300 1234567
+    </div>
+</div>
+{% endblock %}

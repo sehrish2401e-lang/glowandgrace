@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Register | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="form-card auth-form reveal">
+    <h2>Create Account</h2>
+    <p class="sub">Naya account banayein aur apne orders dekhein.</p>
+    <form method="POST" onsubmit="this.querySelector('button').disabled = true;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-block">Register</button>
+    </form>
+    <div class="switch-link">Pehle se account hai? <a href="{% url 'login' %}">Login karein</a></div>
+</div>
+{% endblock %}

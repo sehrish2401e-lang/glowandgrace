@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Login | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="form-card auth-form reveal">
+    <h2>Welcome Back</h2>
+    <p class="sub">Apne account me login karein.</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-block">Login</button>
+    </form>
+    <div class="switch-link">Account nahi hai? <a href="{% url 'register' %}">Register karein</a></div>
+</div>
+{% endblock %}

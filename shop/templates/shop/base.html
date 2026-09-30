@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Glow & Grace{% endblock %}</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-inner">
+            <a href="{% url 'home' %}" class="brand">🌸 Glow & Grace</a>
+            <button class="menu-toggle" type="button" aria-label="Menu">☰</button>
+
+            <form class="search-form" method="GET" action="{% url 'search_results' %}">
+                <input type="text" name="q" placeholder="Search products...">
+                <button type="submit">🔍</button>
+            </form>
+
+            <nav class="nav-links">
+                <a href="{% url 'category_page' 'skincare' %}">Skincare</a>
+                <a href="{% url 'category_page' 'makeup' %}">Makeup</a>
+                <a href="{% url 'category_page' 'haircare' %}">Haircare</a>
+                <a href="{% url 'category_page' 'fragrance' %}">Fragrance</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'cart_detail' %}">Cart 🛒<span class="cart-badge">{{ cart_count|default:0 }}</span></a>
+
+                {% if user.is_authenticated %}
+                    <span class="user-greeting">Salam, {{ user.username }}</span>
+                    <a href="{% url 'my_orders' %}">My Orders</a>
+                    {% if user.is_staff %}<a href="/admin/">Admin</a>{% endif %}
+                    <a href="{% url 'logout' %}" class="auth-btn">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}" class="auth-btn">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    {% if messages %}
+    <div class="toast-wrap">
+        {% for message in messages %}
+        <div class="toast {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>&copy; 2026 Glow & Grace. All rights reserved.</footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

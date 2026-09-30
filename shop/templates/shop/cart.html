@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart | Glow & Grace</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+    body { background:#faf6f0; color:#3a2b2b; }
+
+    .navbar {
+        background: linear-gradient(90deg, #1c1c1c, #2b2b2b);
+        padding: 18px 40px;
+        display: flex; justify-content: space-between; align-items: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        flex-wrap: wrap; gap: 15px;
+    }
+    .navbar h1 { font-size: 26px; color: #e8d9b8; }
+    .navbar nav a { color: #e8d9b8; text-decoration: none; margin-left: 20px; font-weight: 600; font-size: 15px; position: relative; }
+    .navbar nav a:hover { color: #ffffff; }
+    .cart-badge {
+        background: #b8894f; color: #fff; border-radius: 50%;
+        font-size: 11px; padding: 1px 6px; margin-left: 4px;
+    }
+
+    .cart-container { max-width: 800px; margin: 50px auto; padding: 0 20px; }
+    .cart-container h2 { font-size: 30px; color: #2b2420; margin-bottom: 30px; text-align:center; }
+
+    .msg { padding: 12px 18px; border-radius: 10px; background: #e8f5e9; color: #2e6b34; margin-bottom: 15px; font-size: 14px; }
+    .msg.error { background: #fbe4e0; color: #9a3a2d; }
+
+    .cart-item {
+        display: flex; align-items: center; gap: 20px;
+        background: #fff; border-radius: 14px; padding: 15px 20px;
+        margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+    .cart-item img { width: 80px; height: 80px; object-fit: contain; background:#fff; border-radius: 8px; }
+    .item-details { flex: 1; }
+    .item-details h4 { font-size: 16px; color: #2b2420; margin-bottom: 5px; }
+    .item-details .unit-price { font-size: 13px; color: #7a6f63; }
+
+    .qty-controls { display: flex; align-items: center; gap: 10px; }
+    .qty-controls form { display: inline; margin: 0; }
+    .qty-controls button {
+        width: 28px; height: 28px; border: none; cursor: pointer;
+        background: #f5efe2; color: #b8894f; border-radius: 50%;
+        font-weight: bold; font-size: 16px;
+    }
+    .qty-controls button:hover { background: #b8894f; color: #fff; }
+    .qty-controls span { font-weight: 600; min-width: 20px; text-align: center; }
+
+    .item-subtotal { font-weight: bold; color: #b8894f; min-width: 90px; text-align: right; }
+
+    .remove-form { display: inline; margin: 0; }
+    .remove-form button {
+        background: none; border: none; cursor: pointer;
+        color: #9a5a3d; font-size: 13px; margin-left: 15px;
+    }
+    .remove-form button:hover { text-decoration: underline; box-shadow: none; transform: none; }
+
+    .cart-summary {
+        background: #fff; border-radius: 14px; padding: 25px;
+        margin-top: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .cart-summary .total-label { font-size: 18px; font-weight: 600; }
+    .cart-summary .total-amount { font-size: 22px; font-weight: bold; color: #b8894f; }
+
+    .checkout-btn {
+        display: inline-block; background: #b8894f; color: #fff;
+        padding: 12px 30px; border-radius: 30px; text-decoration: none;
+        font-weight: 600; margin-top: 20px; text-align: center;
+    }
+    .checkout-btn:hover { background: #8f6a3d; }
+
+    .empty-cart { text-align: center; padding: 60px 20px; color: #9a8f83; }
+    .empty-cart a { color: #b8894f; font-weight: 600; text-decoration: none; }
+
+    footer {
+        background: #1c1c1c;
+        color: #f0e6d2; text-align: center; padding: 25px; font-size: 14px; margin-top: 60px; }
+
+    @media (max-width: 500px) {
+        .cart-item { flex-wrap: wrap; }
+        .item-subtotal { text-align: left; }
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .fade-in-up {
+        animation: fadeInUp 0.7s ease both;
+    }
+    .fade-in {
+        animation: fadeIn 0.8s ease both;
+    }
+
+    .navbar nav a::after {
+        content: '';
+        position: absolute;
+        left: 0; bottom: -4px;
+        width: 0%;
+        height: 2px;
+        background: currentColor;
+        transition: width 0.25s ease;
+    }
+    .navbar nav a:hover::after {
+        width: 100%;
+    }
+
+    button, .checkout-btn {
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+    }
+    button:hover, .checkout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .cart-item {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cart-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>🌸 Glow & Grace</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'cart_detail' %}">Cart 🛒<span class="cart-badge">{{ cart_count }}</span></a>
+        </nav>
+    </div>
+
+    <div class="cart-container fade-in-up">
+        <h2>Your Cart</h2>
+
+        {% for message in messages %}
+            <div class="msg {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+
+        {% if items %}
+            {% for item in items %}
+            <div class="cart-item">
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/80x80?text=No+Image" alt="No image">
+                {% endif %}
+                <div class="item-details">
+                    <h4>{{ item.product.name }}</h4>
+                    <p class="unit-price">Rs. {{ item.product.price }} / item</p>
+                </div>
+                <div class="qty-controls">
+                    <form method="post" action="{% url 'update_cart' item.product.id 'decrease' %}">
+                        {% csrf_token %}
+                        <button type="submit">−</button>
+                    </form>
+                    <span>{{ item.quantity }}</span>
+                    <form method="post" action="{% url 'update_cart' item.product.id 'increase' %}">
+                        {% csrf_token %}
+                        <button type="submit">+</button>
+                    </form>
+                </div>
+                <div class="item-subtotal">Rs. {{ item.subtotal }}</div>
+                <form method="post" action="{% url 'remove_from_cart' item.product.id %}" class="remove-form">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+            {% endfor %}
+
+            <div class="cart-summary">
+                <span class="total-label">Total</span>
+                <span class="total-amount">Rs. {{ total }}</span>
+            </div>
+
+            <div style="text-align:center;">
+                <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout →</a>
+            </div>
+
+        {% else %}
+            <div class="empty-cart">
+                <p>Aapka cart abhi khaali hai.</p>
+                <p style="margin-top:10px;"><a href="{% url 'home' %}">Shopping shuru karein →</a></p>
+            </div>
+        {% endif %}
+    </div>
+
+    <footer>&copy; 2026 Glow & Grace. All rights reserved.</footer>
+
+</body>
+</html>

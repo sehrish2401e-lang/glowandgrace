@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ product.name }} | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="detail-container reveal">
+    <div class="detail-image">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <img src="https://via.placeholder.com/400x400?text=No+Image" alt="No image">
+        {% endif %}
+    </div>
+    <div class="detail-info">
+        <span class="category-tag">{{ product.category }}</span>
+        <h2>{{ product.name }}</h2>
+        <span class="detail-price">Rs. {{ product.price }}</span>
+        <p class="description">{{ product.description }}</p>
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">Add to Cart 🛒</button>
+        </form>
+        <a href="{% url 'home' %}" class="btn secondary">← Back to Products</a>
+    </div>
+</div>
+{% endblock %}

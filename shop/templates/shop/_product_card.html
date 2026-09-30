@@ -1,0 +1,21 @@
+<div class="product-card reveal" style="--i: {{ forloop.counter0 }}">
+    {% if forloop.first %}<span class="badge-new">NEW</span>{% endif %}
+    <a href="{% url 'product_detail' product.id %}" class="card-link">
+        <div class="card-media">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+            {% else %}
+            <img src="https://via.placeholder.com/220x200?text=No+Image" alt="No image">
+            {% endif %}
+        </div>
+        <div class="product-info">
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description|truncatewords:12 }}</p>
+            <span class="price">Rs. {{ product.price }}</span>
+        </div>
+    </a>
+    <form method="POST" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <button type="submit" class="add-cart-btn">Add to Cart 🛒</button>
+    </form>
+</div>

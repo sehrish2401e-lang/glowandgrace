@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Order Confirmed | Glow & Grace{% endblock %}
+
+{% block content %}
+<div class="success-box fade-in-up">
+    <div class="success-icon">✅</div>
+    <h2>Order Confirmed!</h2>
+    <span class="order-no">Order #{{ order.id }}</span>
+    <p>Shukriya {{ order.name }}, aapka order mil gaya hai.</p>
+    <p>Hum jald hi aapse contact karenge delivery confirm karne ke liye.</p>
+    <div class="amount">Total: Rs. {{ order.total }}</div>
+    <p style="font-size:13px; color:#9a8f83;">Payment: Cash on Delivery</p>
+    <a href="{% url 'home' %}" class="home-btn">← Continue Shopping</a>
+</div>
+{% endblock %}

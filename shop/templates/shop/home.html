@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow & Grace | Skincare & Makeup</title>
+<script>document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-inner">
+            <a href="{% url 'home' %}" class="brand">🌸 Glow & Grace</a>
+            <button class="menu-toggle" type="button" aria-label="Menu">☰</button>
+
+            <form class="search-form" method="GET" action="{% url 'search_results' %}">
+                <input type="text" name="q" placeholder="Search products...">
+                <button type="submit">🔍</button>
+            </form>
+
+            <nav class="nav-links">
+                <a href="{% url 'category_page' 'skincare' %}">Skincare</a>
+                <a href="{% url 'category_page' 'makeup' %}">Makeup</a>
+                <a href="{% url 'category_page' 'haircare' %}">Haircare</a>
+                <a href="{% url 'category_page' 'fragrance' %}">Fragrance</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'cart_detail' %}">Cart 🛒<span class="cart-badge {% if messages %}pop{% endif %}">{{ cart_count }}</span></a>
+
+                {% if user.is_authenticated %}
+                    <span class="user-greeting">Salam, {{ user.username }}</span>
+                    <a href="{% url 'my_orders' %}">My Orders</a>
+                    {% if user.is_staff %}<a href="/admin/">Admin</a>{% endif %}
+                    <a href="{% url 'logout' %}" class="auth-btn">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}" class="auth-btn">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    {% if messages %}
+    <div class="toast-wrap">
+        {% for message in messages %}
+        <div class="toast {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="hero">
+        <p class="eyebrow reveal">Glow & Grace</p>
+        <h2 class="reveal" style="--i:1">Beauty That <span>Feels Like You</span></h2>
+        <p class="tagline reveal" style="--i:2">Handpicked skincare, makeup, haircare and fragrance. Quality you can trust, beauty you deserve.</p>
+        <div class="hero-actions reveal" style="--i:3">
+            <a href="#skincare" class="btn">Shop Now</a>
+            <a href="{% url 'about' %}" class="btn outline">Our Story</a>
+        </div>
+    </section>
+
+    <section id="skincare">
+        <div class="section-title reveal"><h3>✨ Skincare</h3></div>
+        <div class="product-grid">
+            {% for product in skincare %}
+                {% include 'shop/_product_card.html' %}
+            {% empty %}
+                <p class="empty-msg">Abhi tak koi skincare product add nahi hua.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="makeup">
+        <div class="section-title reveal"><h3>💄 Makeup</h3></div>
+        <div class="product-grid">
+            {% for product in makeup %}
+                {% include 'shop/_product_card.html' %}
+            {% empty %}
+                <p class="empty-msg">Abhi tak koi makeup product add nahi hua.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="haircare">
+        <div class="section-title reveal"><h3>💇 Haircare</h3></div>
+        <div class="product-grid">
+            {% for product in haircare %}
+                {% include 'shop/_product_card.html' %}
+            {% empty %}
+                <p class="empty-msg">Abhi tak koi haircare product add nahi hua.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="fragrance">
+        <div class="section-title reveal"><h3>🌺 Fragrance</h3></div>
+        <div class="product-grid">
+            {% for product in fragrance %}
+                {% include 'shop/_product_card.html' %}
+            {% empty %}
+                <p class="empty-msg">Abhi tak koi fragrance product add nahi hua.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <footer>&copy; 2026 Glow & Grace. All rights reserved.</footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
