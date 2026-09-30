@@ -22,9 +22,8 @@ if not SECRET_KEY:
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['.trycloudflare.com', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://*.trycloudflare.com']
-
+ALLOWED_HOSTS = ['glowandgrace.pythonanywhere.com', 'localhost', '127.0.0.1', '.trycloudflare.com']
+CSRF_TRUSTED_ORIGINS = ['https://glowandgrace.pythonanywhere.com', 'https://*.trycloudflare.com']
 
 # ---------------------------------------------------------------
 # Application definition
