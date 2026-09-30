@@ -1,0 +1,11 @@
+﻿:root { --gg-dark:#1f1a17; --gg-gold:#b5854b; --gg-cream:#faf6ee; }
+body, .content-wrapper { background-color: var(--gg-cream) !important; }
+.main-header.navbar { background-color: var(--gg-dark) !important; border-color: var(--gg-dark) !important; }
+.main-header .nav-link, .main-header .navbar-nav .nav-link { color: #f3e6cf !important; }
+.main-sidebar, .sidebar-dark-primary { background-color: var(--gg-dark) !important; }
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active { background-color: var(--gg-gold) !important; color: #fff !important; }
+.brand-link { border-bottom-color: #3a312b !important; color: #f3e6cf !important; }
+.btn-primary, .btn-success, .btn-info { background-color: var(--gg-gold) !important; border-color: var(--gg-gold) !important; color: #fff !important; }
+.btn-primary:hover, .btn-success:hover { background-color: #9a6f3b !important; }
+a { color: var(--gg-gold); }
+.card-primary:not(.card-outline) > .card-header, .module h2, .module caption { background-color: var(--gg-gold) !important; color: #fff !important; }

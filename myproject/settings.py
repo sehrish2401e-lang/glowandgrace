@@ -136,3 +136,15 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    JAZZMIN_SETTINGS = {
+    "site_title": "Glow & Grace Admin",
+    "site_header": "Glow & Grace",
+    "site_brand": "Glow & Grace",
+    "custom_css": "admin_custom.css",
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",
+    "navbar": "navbar-dark",
+    "sidebar": "sidebar-dark-primary",
+}
